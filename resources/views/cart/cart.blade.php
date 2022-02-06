@@ -30,7 +30,9 @@
                                             <h5>{{ $product['product_name'] }}</h5>
                                             <small><span>$</span>{{$product['product_price']}}</small>
                                                 <br>
-                                                <form>
+                                                <form method="POST" action="{{ URL('delete/from/cart/'.$product['product_id']) }}">
+                                                    @method('POST')
+                                                    @csrf
                                                     <button type="submit" name="remove_btn" class="btn-sm btn-danger" value="remove">
                                                    Remove
                                                     </button>
@@ -39,11 +41,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <form>
-                                            <input type="submit" value="-" class="edit-btn" name="decrease_product_quantity_btn">
+                                        <form method="POST" action="{{ URL('edit/product/quantity/'.$product['product_id']) }}">
+                                            @csrf
+                                            @method('POST')
+                                            <input type="submit" value="-" class="edit-btn" name="decrease_quantity">
+
                                             <input type="text" name="quantity" value="{{$product['quantity']}}" readonly>
 
-                                            <input type="submit" value="+" class="edit-btn" name="increase_product_quantity_btn">
+                                            <input type="submit" value="+" class="edit-btn" name="increase_quantity">
                                         </form>
                                     </td>
                                     <td>
@@ -51,7 +56,8 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        @elseif(Auth::user())
+
+                    @elseif(\Illuminate\Support\Facades\Auth::user())
 
                             @foreach($cart as $product)
                                 <tr>
@@ -62,7 +68,9 @@
                                                 <h5>{{ $product->product_name }}</h5>
                                                 <small><span>$</span>{{$product->product_price}}</small>
                                                 <br>
-                                                <form>
+                                                <form method="POST" action="{{ URL('delete/from/cart/'.$product['product_id'])}}">
+                                                    @method('POST')
+                                                    @csrf
                                                     <button type="submit" name="remove_btn" class="btn-sm btn-danger" value="remove">
                                                         Remove
                                                     </button>
@@ -71,11 +79,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <form>
-                                            <input type="submit" value="-" class="edit-btn" name="decrease_product_quantity_btn">
-                                            <input type="text" name="quantity" value="{{$product->quantity}}" readonly>
+                                        <form method="POST" action="{{ URL('edit/product/quantity/'.$product['product_id']) }}">
+                                            @csrf
+                                            @method('POST')
+                                            <input type="submit" value="-" class="edit-btn" name="decrease_quantity">
 
-                                            <input type="submit" value="+" class="edit-btn" name="increase_product_quantity_btn">
+                                            <input type="text" name="quantity" value="{{$product['quantity']}}" readonly>
+
+                                            <input type="submit" value="+" class="edit-btn" name="increase_quantity">
                                         </form>
                                     </td>
                                     <td>
@@ -83,21 +94,36 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        @endif
+
+                    @endif
                     </table>
 
                     <div class="cart-total">
                         <table>
                             @if(Session::has('cart'))
+                                @php
+                                    $subtotal = 0;
+                                    foreach(Session::get('cart') as $id=>$product){
+                                     $subtotal += $product['product_price'] * $product['quantity'];
+                                    }
+                                @endphp
                                 <tr>
                                     <td>Total</td>
                                     <td>$ {{$subtotal}}</td>
                                 </tr>
 
                             @elseif(Auth::user())
+                                @php
+
+                                    $subtotall = 0;
+                                    foreach($cart as $product){
+                                         $subtotall += $product->quantity * $product->product_price;
+
+                                    }
+                                @endphp
                                 <tr>
                                     <td>Total</td>
-                                    <td>${{$cart->sum('product_price')}}</td>
+                                    <td>${{$subtotall}}</td>
                                 </tr>
                             @endif
                         </table>

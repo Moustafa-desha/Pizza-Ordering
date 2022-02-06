@@ -38,6 +38,8 @@ Route::get('view/product/{id}', [HomeController::class, 'veiwProduct']);
         /******* Cart ********/
 Route::get('cart', [CartController::class, 'Cart']);
 Route::get('add/cart/{id}', [CartController::class, 'addToCart']);
+Route::POST('delete/from/cart/{id}', [CartController::class, 'deleteFromCart']);
+Route::POST('edit/product/quantity/{id}', [CartController::class, 'editCartQuantity']);
 
 
 
