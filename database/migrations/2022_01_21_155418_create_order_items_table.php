@@ -21,7 +21,7 @@ class CreateOrderItemsTable extends Migration
             $table->decimal('product_price',9,2);
             $table->string('product_image');
             $table->integer('product_quantity');
-            $table->date('order_date');
+            $table->dateTime('order_date');
             $table->timestamps();
         });
     }

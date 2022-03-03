@@ -15,6 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->nullable();
             $table->string('cost',9,2);
             $table->string('user_name');
             $table->string('user_email');
@@ -22,7 +23,8 @@ class CreateOrdersTable extends Migration
             $table->string('city');
             $table->string('address');
             $table->string('phone');
-            $table->date('date');
+            $table->dateTime('date');
+            $table->bigInteger('delivery')->default(0);
 
             $table->timestamps();
         });

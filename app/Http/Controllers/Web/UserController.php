@@ -63,7 +63,7 @@ class UserController extends Controller
 
 
             if (Session::has('cart')){
-                   foreach (Session::get('cart') as $id=>$cart){
+                   foreach (Session::get('cart') as $id => $cart){
 
                     $carModel = new Cart();
                     $carModel['user_id'] = Auth::user()->id;

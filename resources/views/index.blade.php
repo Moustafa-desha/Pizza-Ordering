@@ -218,7 +218,12 @@
                         <div class="desc pl-3">
                             <div class="d-flex text align-items-center">
                                 <h3><span>{{ $product->product_name }}</span></h3>
-                                <span class="price">$ {{$product->sale_price}}</span>
+                                0
+                                @if($product->sale_price == 0)
+                                    <span class="price">$ {{$product->product_price}}</span>
+                                @else
+                                    <span class="price">$ {{$product->sale_price}}</span>
+                                @endif
                             </div>
                             <div class="d-block">
                                 <p style="color: navajowhite">{{$product->Category->category_name}}</p>

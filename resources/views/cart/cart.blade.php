@@ -21,7 +21,7 @@
                     </tr>
 
                     @if(Session::has('cart'))
-                        @foreach(Session::get('cart') as $id=>$product)
+                        @foreach(Session::get('cart') as $id => $product)
                             <tr>
                                 <td>
                                     <div class="product-info">
@@ -101,41 +101,27 @@
                     <div class="cart-total">
                         <table>
                             @if(Session::has('cart'))
-                                @php
-                                    $subtotal = 0;
-                                    foreach(Session::get('cart') as $id=>$product){
-                                     $subtotal += $product['product_price'] * $product['quantity'];
-                                    }
-                                @endphp
                                 <tr>
                                     <td>Total</td>
-                                    <td>$ {{$subtotal}}</td>
+                                    <td>$ {{Session::get('subtotal')}}</td>
                                 </tr>
 
                             @elseif(Auth::user())
-                                @php
-
-                                    $subtotall = 0;
-                                    foreach($cart as $product){
-                                         $subtotall += $product->quantity * $product->product_price;
-
-                                    }
-                                @endphp
                                 <tr>
                                     <td>Total</td>
-                                    <td>${{$subtotall}}</td>
+                                    <td>$ {{$subtotal}}</td>
                                 </tr>
                             @endif
                         </table>
                     </div>
 
-
-
                     <div class="checkout-container">
 
-                        <form>
-                            <input type="submit" class="btn checkout-btn" value="Checkout" name="">
-                        </form>
+{{--                        <form>--}}
+
+                        <a href="{{ url("checkout/cart")  }}" class="btn checkout-btn" value="Checkout" name=""> Checkout </a>
+
+                            {{--                        </form>--}}
 
                     </div>
 
